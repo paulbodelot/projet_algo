@@ -89,6 +89,11 @@ public class Rayon
 		
 		this.createur = createur;
 		
+		//this.xFin = this.xDebut + dir[0]*1000;
+		//this.yFin = this.yDebut + dir[1]*1000;
+		
+		//pour mettre a jour les valeurs mais apparement ca ne sert a rien
+		
 	}
 	
 	public Rayon chercheObstacle (ArrayList<Miroir> liste) {

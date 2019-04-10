@@ -11,7 +11,9 @@ public class FenetreSaisie extends JDialog implements ActionListener{
 	JButton validation = new JButton();
 	JTextField taille=new JTextField();
 	int[] nouvelElement;
-		
+	JOptionPane erreur = new JOptionPane();
+	private boolean envoi =true;
+	
 	public FenetreSaisie(JFrame fenetre, String titre, boolean modal,int[] coordonnes){
 		super(fenetre,titre,modal);
 		setSize(150,180);
@@ -58,9 +60,10 @@ public class FenetreSaisie extends JDialog implements ActionListener{
 		
 	}
 	
+	
 	public void actionPerformed (ActionEvent e){
 		if (e.getSource()== validation){
-			
+			envoi=true;
 			String chaine = posX.getText();
 			nouvelElement[0] = Integer.parseInt(chaine);
 			
@@ -73,13 +76,29 @@ public class FenetreSaisie extends JDialog implements ActionListener{
 			chaine = taille.getText();
 			nouvelElement[3] = Integer.parseInt(chaine);
 			
-			angle.setText("angle");
-			posX.setText("posX");
-			posY.setText("posY");
-			taille.setText("taille");
+			//Verification que la saisie est correcte
+			if(nouvelElement[3]==0){
+				erreur.showMessageDialog(null, "La taille ne peut pas être nulle","erreur", JOptionPane.ERROR_MESSAGE);
+				envoi =false;
+			}
+			if((nouvelElement[0]-Math.cos(nouvelElement[3])*nouvelElement[3]<50)||(nouvelElement[0]+Math.cos(nouvelElement[3])*nouvelElement[3]>750)){
+				erreur.showMessageDialog(null, "Position x trop grande ou trop petite","erreur", JOptionPane.ERROR_MESSAGE);
+				envoi =false;
+			}
 			
-			setVisible(false);
+			if((nouvelElement[0]-Math.sin(nouvelElement[3])*nouvelElement[3]<20)||(nouvelElement[0]+Math.sin(nouvelElement[3])*nouvelElement[3]>320)){
+				erreur.showMessageDialog(null, "Position y trop grande ou trop petite","erreur", JOptionPane.ERROR_MESSAGE);
+				envoi =false;
+			}
+			if(envoi){
+				angle.setText("angle");
+				posX.setText("posX");
+				posY.setText("posY");
+				taille.setText("taille");
+				
+				setVisible(false);
+			}
+			
 		}
 	}
 }
-

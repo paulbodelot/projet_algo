@@ -181,7 +181,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 			else return false;
 		}
 		
-		/*
+		
 		public void actualiseRayons()
 		{
 			if(objetAjoute())
@@ -194,7 +194,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 					}
 				}
 			}
-		}*/
+		}
 		
 	
 	public void paint(Graphics g){
@@ -216,4 +216,3 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 
 	
 }
-	

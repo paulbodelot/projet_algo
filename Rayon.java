@@ -99,6 +99,7 @@ public class Rayon
 			System.out.println("Recherche d'un obstacle");
 			for (Miroir mir : liste) {
 			
+			if (mir!=createur) {
 				int [] tab = new int[2];
 				int xSol = mir.eqDroite.resoudreSysteme(this.eqDroite)[0];
 				int ySol = mir.eqDroite.resoudreSysteme(this.eqDroite)[1];
@@ -110,8 +111,9 @@ public class Rayon
 					xFin=tab[0];
 					yFin=tab[1];
 					rayonRet = mir.creationRayon(xFin, yFin, eqDroite);
-					break;
+					//break;
 				}
+			}
 			
 			}
 		}

@@ -27,6 +27,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 	public ArrayList<SourceLum> listeSources;
 	
 	public FenetreSaisie saisieMiroir;
+	public FenetreSaisie saisieSource;
 	
 	public int nbObjetsPrecedent = 0;
 	
@@ -38,6 +39,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 		this.listeMiroirs=miroirs;
 		this.listeSources=sources;
 		saisieMiroir = new FenetreSaisie(this, "paramètres",modal,nouvelElement);
+		saisieSource = new FenetreSaisie(this, "paramètres",modal,nouvelElement);
 		
 		this.setTitle("Banc optique virtuel");
 		this.setSize(800,600);
@@ -143,8 +145,8 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 			repaint();
 		}
 		if (e.getSource()== boutonRayonRouge){
-			System.out.println("Vous avez selectionne le rayon rouge");
-			SourceLum lum = new SourceLum (200, 250, 0, 50, Color.red);
+			saisieSource.setVisible(true);
+			SourceLum lum = new SourceLum (nouvelElement[0],nouvelElement[1],nouvelElement[2],nouvelElement[3], Color.red);
 			listeSources.add(lum);
 			System.out.println("nouvelle source");
 			Rayon ray = lum.creationRayon();
@@ -157,12 +159,6 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 				repaint();
 			}
 		}
-		
-		if (e.getSource()== boutonRayonVert){
-			for(Rayon ray:listeRayons){
-			System.out.println(ray);
-		}
-	}
 	}
 		
 		/*public boolean rayonAjoute()
@@ -187,7 +183,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 			else return false;
 		}
 		
-		
+		/*
 		public void actualiseRayons()
 		{
 			if(objetAjoute())
@@ -200,7 +196,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 					}
 				}
 			}
-		}
+		}*/
 		
 	
 	public void paint(Graphics g){

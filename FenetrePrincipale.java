@@ -19,9 +19,14 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 	private JButton boutonRayonVert;
 	private JTextArea Affichage;
 	
+	public int[] nouvelElement = new int [4];
+	public boolean modal=true;
+	
 	public ArrayList<Rayon> listeRayons;
 	public ArrayList<Miroir> listeMiroirs;
 	public ArrayList<SourceLum> listeSources;
+	
+	public FenetreSaisie saisieMiroir;
 	
 	public int nbObjetsPrecedent = 0;
 	
@@ -32,6 +37,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 		this.listeRayons=rayons;
 		this.listeMiroirs=miroirs;
 		this.listeSources=sources;
+		saisieMiroir = new FenetreSaisie(this, "paramètres",modal,nouvelElement);
 		
 		this.setTitle("Banc optique virtuel");
 		this.setSize(800,600);
@@ -130,20 +136,11 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 	public void actionPerformed (ActionEvent e){
 		
 		if (e.getSource()== boutonMiroir){
-			System.out.println("Vous avez sélectionné le miroir");
-			Miroir nouveauMiroir = new Miroir(280,1000,100,100);
+			saisieMiroir.setVisible(true);
+			
+			Miroir nouveauMiroir = new Miroir(nouvelElement[0],nouvelElement[1],nouvelElement[2],nouvelElement[3]);
 			listeMiroirs.add(nouveauMiroir);
-			
-			System.out.println("nouveau miroir");
-			//if(!listeRayons.isEmpty() && !listeMiroirs.isEmpty())
-			
-			for (int i = 0; i< listeRayons.size(); i++)
-					{
-						listeRayons.add(listeRayons.get(i).chercheObstacle(listeMiroirs));
-					}
-					repaint();
-			
-			
+			repaint();
 		}
 		if (e.getSource()== boutonRayonRouge){
 			System.out.println("Vous avez selectionne le rayon rouge");

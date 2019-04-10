@@ -110,6 +110,8 @@ public class Rayon
 					System.out.println("Obstacle trouvé !");
 					xFin=tab[0];
 					yFin=tab[1];
+					System.out.println(xFin);
+					System.out.println(yFin);
 					rayonRet = mir.creationRayon(xFin, yFin, eqDroite);
 					//break;
 				}

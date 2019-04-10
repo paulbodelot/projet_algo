@@ -157,6 +157,12 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 				repaint();
 			}
 		}
+		
+		if (e.getSource()== boutonRayonVert){
+			for(Rayon ray:listeRayons){
+			System.out.println(ray);
+		}
+	}
 	}
 		
 		/*public boolean rayonAjoute()

@@ -51,7 +51,7 @@ public class Miroir extends ObjetOptique {
 		
 		System.out.println("Nouveau rayon réfléchi");
 		
-		Rayon nouveauRayon = new Rayon(posX,posY,nouvelleDir,Color.red);
+		Rayon nouveauRayon = new Rayon(posX,posY,nouvelleDir,Color.red, this);
 		return nouveauRayon;
 	}
 	

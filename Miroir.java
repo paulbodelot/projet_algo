@@ -3,15 +3,21 @@ import java.awt.Color ;
 import javax.swing.JFrame ;
 //Version modifiée par Arthur le 09/04
 public class Miroir extends ObjetOptique {
-	int x;
-	int y;
+	int xmin;
+	int ymin;
+	int xmax;
+	int ymax;
+	
 	double angle;
 	int taille;
 	Equation eqDroite;
 	
 	public Miroir(int posX, int posY, int angleD, int taille){
-		this.x = posX;
-		this.y = posY;
+		this.xmin = (int)(posX+(Math.cos(angle)*(taille/2)));
+		this.ymin = (int)(posY+(Math.sin(angle)*(taille/2)));
+		this.xmax = (int)(posX-(Math.cos(angle)*(taille/2)));
+		this.ymax = (int)(posY-(Math.sin(angle)*(taille/2)));
+		
 		this.taille = taille;
 		angle=angleD*Math.PI/180;
 		int [] posMiroir = {posX,posY};
@@ -57,7 +63,7 @@ public class Miroir extends ObjetOptique {
 	
 	public void dessin(Graphics g){
 		g.setColor(Color.black);
-		g.drawLine( (int)(this.x+(Math.cos(angle)*taille/2)),(int)(this.y+(Math.sin(angle)*(taille/2))),  (int)(this.x-(Math.cos(angle)*(taille/2))),  (int)(y-(Math.sin(angle)*(taille/2))));
+		g.drawLine(xmin,ymin,(xmax),(ymax));
 	
 		
 			}

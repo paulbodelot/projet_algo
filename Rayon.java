@@ -110,10 +110,10 @@ public class Rayon
 					int ySol = mir.eqDroite.resoudreSysteme(this.eqDroite)[1];
 					tab[0] = xSol;
 					tab[1] = ySol;
-					if((xSol>mir.xmax)||(ySol>mir.ymax)||(xSol<mir.xmax)||(ySol<mir.xmax)){
+					/*if((xSol>mir.xmax)||(ySol>mir.ymax)||(xSol<mir.xmax)||(ySol<mir.xmax)){
 						tab[0]=-2048;
 						tab[1]=-2048;
-					}
+					}*/
 
 					if ((tab[0]!=-2048 && tab[1]!=-2048) && (tab[0]!=2048 && tab[1]!=2048)) {
 						System.out.println("Obstacle trouvé !");
@@ -130,7 +130,7 @@ public class Rayon
 		}
 		if(rayonRet == null)
 		{
-			rayonRet = this;
+			rayonRet = null;
 		}
 		return rayonRet;
 		

@@ -20,7 +20,7 @@ public class SourceLum {
 	
 	public Rayon creationRayon () {
 		
-		Rayon ray = new Rayon (this.x, this.y, 900-this.x, this.y, couleur_rayon); 
+		Rayon ray = new Rayon (this.x, this.y, 900-this.x, this.y, couleur_rayon,null); 
 		//Les limites de la zone de travail sont 700 et 400, d'ou les calculs
 		System.out.println("Le rayon cree commence en x = "+x+" et en y = "+y+"\n puis termine en x = "+(700-this.x)+" et en y = "+(300-this.y));
 		return ray;

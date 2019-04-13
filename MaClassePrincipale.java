@@ -10,9 +10,5 @@ public class MaClassePrincipale {
 		ArrayList<SourceLum> sources = new ArrayList <SourceLum>();
 		FenetrePrincipale maFenetre = new FenetrePrincipale(rayons, miroirs, sources);
 		
-		/*while(!fermetureDuProgramme)
-		{
-			maFenetre.actualiseRayons();
-		}*/
 	}
 }	

@@ -19,8 +19,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 	private JButton boutonRayonVert;
 	private JTextArea Affichage;
 	
-	public int[] nouvelElement = new int [4];
-	public boolean modal=true;
+	public int[] nouvelElement = new int [4]; //transmission des valeurs saisie par les fenetres de saisie
 	
 	public ArrayList<Rayon> listeRayons;
 	public ArrayList<Miroir> listeMiroirs;
@@ -29,7 +28,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 	public FenetreSaisie saisieMiroir;
 	public FenetreSaisie saisieSource;
 	
-	public int nbObjetsPrecedent = 0;
+	//public int nbObjetsPrecedent = 0;
 	
 	//SourceLum lum = new SourceLum (200, 250, 0, 50, Color.red);
 	
@@ -38,8 +37,8 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 		this.listeRayons=rayons;
 		this.listeMiroirs=miroirs;
 		this.listeSources=sources;
-		saisieMiroir = new FenetreSaisie(this, "paramètres",modal,nouvelElement);
-		saisieSource = new FenetreSaisie(this, "paramètres",modal,nouvelElement);
+		saisieMiroir = new FenetreSaisie(this, "paramètres",true,nouvelElement);
+		saisieSource = new FenetreSaisie(this, "paramètres",true,nouvelElement);
 		
 		this.setTitle("Banc optique virtuel");
 		this.setSize(800,600);
@@ -155,9 +154,11 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 			/*if(!listeRayons.isEmpty() && !listeMiroirs.isEmpty())
 			{
 				ray.chercheObstacle(listeMiroirs);
-				repaint();
+				
 			}*/
 		}
+		actualiseRayons();
+		repaint();
 	}
 		
 
@@ -175,7 +176,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 		}*/
 		
 		
-		public void actualiseRayons(){ //ici pour chaque modification on recalcul tous les rayons
+		public void actualiseRayons(){//ici pour chaque modification on recalcul tous les rayons
 		
 			ArrayList<Rayon> rayons_new=new ArrayList <Rayon>(); //on crée une nouvelle liste de rayons
 			

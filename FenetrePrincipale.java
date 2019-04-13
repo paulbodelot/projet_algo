@@ -152,17 +152,17 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 			listeRayons.add(ray);
 			System.out.println("nouveau rayon");
 			
-			//if(!listeRayons.isEmpty() && !listeMiroirs.isEmpty())
+			/*if(!listeRayons.isEmpty() && !listeMiroirs.isEmpty())
 			{
 				ray.chercheObstacle(listeMiroirs);
 				repaint();
-			}
+			}*/
 		}
 	}
 		
 
 		
-		public boolean objetAjoute()
+		/*public boolean objetAjoute()
 		{
 			if(nbObjetsPrecedent != listeMiroirs.size())
 			{
@@ -172,11 +172,11 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 			}
 			
 			else return false;
-		}
+		}*/
 		
 		
-		public void actualiseRayons() //ici pour chaque modification on recalcul tous les rayons
-		{
+		public void actualiseRayons(){ //ici pour chaque modification on recalcul tous les rayons
+		
 			ArrayList<Rayon> rayons_new=new ArrayList <Rayon>(); //on crée une nouvelle liste de rayons
 			
 			for (SourceLum src : listeSources) { //on fait défiler la liste des sources

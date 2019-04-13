@@ -139,7 +139,6 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 		
 		if (e.getSource()== boutonMiroir){
 			saisieMiroir.setVisible(true);
-			
 			Miroir nouveauMiroir = new Miroir(nouvelElement[0],nouvelElement[1],nouvelElement[2],nouvelElement[3]);
 			listeMiroirs.add(nouveauMiroir);
 			repaint();
@@ -161,15 +160,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 		}
 	}
 		
-		/*public boolean rayonAjoute()
-		{
-			
-		}
-		
-		public boolean sourceAjoutee()
-		{
-			
-		}*/
+
 		
 		public boolean objetAjoute()
 		{
@@ -183,20 +174,26 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 			else return false;
 		}
 		
-		/*
-		public void actualiseRayons()
-		{
-			if(objetAjoute())
-			{
 		
-				{
-					for (Rayon ray : listeRayons)
-					{
-						ray.chercheObstacle(listeMiroirs);
-					}
+		public void actualiseRayons() //ici pour chaque modification on recalcul tous les rayons
+		{
+			ArrayList<Rayon> rayons_new=new ArrayList <Rayon>(); //on crée une nouvelle liste de rayons
+			
+			for (SourceLum src : listeSources) { //on fait défiler la liste des sources
+				
+				rayons_new.add(src.creationRayon()); //on rajoute la source dans la liste de rayon
+				
+				Rayon ray_suiv = src.creationRayon().chercheObstacle(listeMiroirs); //on utilise comme variable provisoire le rayon suivant
+				
+				while (ray_suiv != null) { //tant que le rayon suivant n'est pas nul
+					
+					rayons_new.add(ray_suiv); //on ajoute le nouveau rayon
+					ray_suiv = ray_suiv.chercheObstacle(listeMiroirs); //puis on met le rayon prochaine dans la variable proviosoire
+					
 				}
+				
 			}
-		}*/
+		}
 		
 	
 	public void paint(Graphics g){

@@ -99,6 +99,9 @@ public class Rayon
 	public Rayon chercheObstacle (ArrayList<Miroir> liste) {
 		
 		Rayon rayonRet = null;
+		//TEST PAUL
+		//this.xFin=200;
+		//this.yFin=200;
 		
 		if(!liste.isEmpty()){
 			System.out.println("Recherche d'un obstacle");
@@ -121,6 +124,8 @@ public class Rayon
 						yFin=tab[1];
 						System.out.println(xFin);
 						System.out.println(yFin);
+						//this.xFin=200;
+						//this.yFin=200;
 						rayonRet = mir.creationRayon(xFin, yFin, eqDroite);
 						//break;
 					}

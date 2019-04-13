@@ -10,34 +10,57 @@ public class Miroir extends ObjetOptique {
 	
 	double angle;
 	int taille;
+	Equation eqDroite;
 	
 	public Miroir(int posX, int posY, int angleD, int taille){
 		this.taille = taille;
 		angle=angleD*Math.PI/180;
 		
 		
-		this.xmin = (int)(posX-(Math.cos(angle)*(taille/2)));
-		this.ymin = (int)(posY-(Math.sin(angle)*(taille/2)));
-		this.xmax = (int)(posX+(Math.cos(angle)*(taille/2)));
-		this.ymax = (int)(posY+(Math.sin(angle)*(taille/2)));
+		this.xmin = (int)(posX+(Math.cos(angle)*(taille/2)));
+		this.ymin = (int)(posY+(Math.sin(angle)*(taille/2)));
+		this.xmax = (int)(posX-(Math.cos(angle)*(taille/2)));
+		this.ymax = (int)(posY-(Math.sin(angle)*(taille/2)));
 		
 		
 		int [] posMiroir = {posX,posY};
 		int [] dirMiroir = new int[2];
 		
-	}
-	public Rayon creationRayon(Rayon rIncident, int xD, int yD){ //On crée un rayon réfléchi : son angle au miroir est l'opposé de celui du rayon incident
-		double angleIncident = Math.PI;
-		if(rIncident.xDebut-rIncident.xFin!=0){
-			angleIncident =Math.atan((rIncident.yFin-rIncident.yDebut)/(rIncident.xDebut-rIncident.xFin));
-		}
-		double angleReflexion = 2*this.angle-angleIncident;
-		if (rIncident.xDebut > xD){
-			angleReflexion=-angleIncident;
+		if(angle>Math.PI/2 && angle<Math.PI*3/2)
+		{
+			dirMiroir[0] = -100;
+			dirMiroir[1] = -(int)(100*Math.tan(angle));
 		}
 		
-		System.out.println(xD+Math.cos(angleReflexion));
-		Rayon nouveauRayon = new Rayon (xD, yD, (int)(xD+Math.cos(angleReflexion)*900), (int)(yD+Math.sin(angleReflexion)*900),Color.red,this);
+		else
+		{
+			dirMiroir[0] = 100;
+			dirMiroir[1] = (int)(100*Math.tan(angle));
+		}
+		
+		this.eqDroite = new Equation(dirMiroir,posMiroir);
+	}
+	public Rayon creationRayon(int posX, int posY,Equation eq){ //On crée un rayon réfléchi : son angle au miroir est l'opposé de celui du rayon incident
+		
+		int[]nouvelleDir = new int[2];
+		double angleInit = Math.atan2(eq.vDir[1],eq.vDir[0]);
+		double angleFinal = 2*this.angle-angleInit;
+		
+		if(angleFinal>Math.PI/2 && angleFinal<Math.PI*3/2)
+		{
+			nouvelleDir[0] = -100;
+			nouvelleDir[1] = -(int)(100*Math.tan(angleFinal));
+		}
+		
+		else
+		{
+			nouvelleDir[0] = 100;
+			nouvelleDir[1] = (int)(100*Math.tan(angleFinal));
+		}
+		
+		System.out.println("Nouveau rayon réfléchi");
+		
+		Rayon nouveauRayon = new Rayon(posX,posY,nouvelleDir,Color.red, this);
 		return nouveauRayon;
 	}
 	
@@ -48,4 +71,5 @@ public class Miroir extends ObjetOptique {
 		
 			}
 }
+
 

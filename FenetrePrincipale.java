@@ -28,6 +28,10 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 	public FenetreSaisie saisieMiroir;
 	public FenetreSaisie saisieSource;
 	
+	//public int nbObjetsPrecedent = 0;
+	
+	//SourceLum lum = new SourceLum (200, 250, 0, 50, Color.red);
+	
 	
 	public FenetrePrincipale (ArrayList<Rayon> rayons, ArrayList<Miroir> miroirs, ArrayList<SourceLum> sources) {
 		this.listeRayons=rayons;
@@ -136,6 +140,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 			saisieMiroir.setVisible(true);
 			Miroir nouveauMiroir = new Miroir(nouvelElement[0],nouvelElement[1],nouvelElement[2],nouvelElement[3]);
 			listeMiroirs.add(nouveauMiroir);
+			repaint();
 		}
 		
 		
@@ -146,18 +151,40 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 				
 			}
 			System.out.println("*Fin liste Rayons");
+			repaint();
 		}
 		if (e.getSource()== boutonRayonRouge){
 			saisieSource.setVisible(true);
 			SourceLum lum = new SourceLum (nouvelElement[0],nouvelElement[1],nouvelElement[2],nouvelElement[3], Color.red);
 			listeSources.add(lum);
 			System.out.println("nouvelle source");
+			//Rayon ray = lum.creationRayon();
+			//listeRayons.add(ray);
+			//System.out.println("nouveau rayon");
+			
+			/*if(!listeRayons.isEmpty() && !listeMiroirs.isEmpty())
+			{
+				ray.chercheObstacle(listeMiroirs);
+				
+			}*/
 		}
 		actualiseRayons();
 		repaint();
 	}
 		
 
+		
+		/*public boolean objetAjoute()
+		{
+			if(nbObjetsPrecedent != listeMiroirs.size())
+			{
+				nbObjetsPrecedent = listeMiroirs.size();
+				System.out.println("Objet ajouté");
+				return true;
+			}
+			
+			else return false;
+		}*/
 		
 		
 		public void actualiseRayons(){//ici pour chaque modification on recalcul tous les rayons
@@ -182,9 +209,9 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 				}
 				
 			}
-			
 			System.out.println("*Fin actualise Rayon");
 			listeRayons=rayons_new;
+			repaint();
 		}
 		
 	

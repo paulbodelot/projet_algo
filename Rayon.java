@@ -1,7 +1,5 @@
 import java.awt.*;
 import java.util.*;
-import javax.swing.*;
-
 
 public class Rayon
 {
@@ -11,9 +9,48 @@ public class Rayon
 	public int xFin;
 	public int yFin;
 	public Color couleur;
+	public Equation eqDroite;
 	public ObjetOptique createur;
 	
-
+	
+	public Rayon(int xD,int yD, int xF, int yF,Color laCouleur) //Crée un rayon entre deux points
+	{
+		this.xDebut = xD;
+		this.yDebut = yD;
+		this.xFin = xF;
+		this.yFin = yF;
+		
+		this.couleur = laCouleur;
+		
+		//On crée le vecteur directeur du rayon et on calcule son ordonnée à l'origine pour avoir son équation de droite
+		int[]dirRayon= new int[2];
+		dirRayon[0] = xFin-xDebut;
+		dirRayon[1] = yFin-yDebut;
+		
+		int y0 = yDebut-xDebut*dirRayon[1]/dirRayon[0];
+		
+		this.eqDroite = new Equation(dirRayon,y0);
+		
+		this.createur = null;
+		
+	}
+	
+	public Rayon(int xD, int yD, int []dir,Color laCouleur) //Crée un rayon entre deux points dont les coordonnées sont rangées dans des tableaux
+	{
+		this.xDebut = xD;
+		this.yDebut = xD;
+		
+		this.couleur = laCouleur;
+		
+		//On calcule l'ordonnée à l'origine pour avoir son équation de droite
+		
+		int y0 = yDebut-xDebut*dir[1]/dir[0];
+		
+		this.eqDroite = new Equation(dir,y0);
+		
+		this.createur = null;
+		
+	}
 	
 	public Rayon(int xD,int yD, int xF, int yF,Color laCouleur, ObjetOptique createur) //Crée un rayon entre deux points
 	{
@@ -25,39 +62,70 @@ public class Rayon
 		this.couleur = laCouleur;
 		
 		//On crée le vecteur directeur du rayon et on calcule son ordonnée à l'origine pour avoir son équation de droite
+		int[]dirRayon= new int[2];
+		dirRayon[0] = xFin-xDebut;
+		dirRayon[1] = yFin-yDebut;
 		
-		//this.eqDroite = new Equation(dirRayon,y0);
+		int y0 = yDebut-xDebut*dirRayon[1]/dirRayon[0];
+		
+		this.eqDroite = new Equation(dirRayon,y0);
 		
 		this.createur = createur;
-		/*if(xFin>750){
-			xFin=749;
-		}
-		if(yFin>320){
-			yFin=319;
-		}*/
 		
 	}
 	
+	public Rayon(int xD, int yD, int []dir,Color laCouleur, ObjetOptique createur) //Crée un rayon entre deux points dont les coordonnées sont rangées dans des tableaux
+	{
+		this.xDebut = xD;
+		this.yDebut = xD;
+		
+		this.couleur = laCouleur;
+		
+		//On calcule l'ordonnée à l'origine pour avoir son équation de droite
+		
+		int y0 = yDebut-xDebut*dir[1]/dir[0];
+		
+		this.eqDroite = new Equation(dir,y0);
+		
+		this.createur = createur;
+		
+		//this.xFin = this.xDebut + dir[0]*1000;
+		//this.yFin = this.yDebut + dir[1]*1000;
+		
+		//pour mettre a jour les valeurs mais apparement ca ne sert a rien
+		
+	}
 	
 	public Rayon chercheObstacle (ArrayList<Miroir> liste) {
 		
 		Rayon rayonRet = null;
-		//this.xFin=200;
-		//this.yFin=200;
+		
 		
 		if(!liste.isEmpty()){
 			System.out.println("Recherche d'un obstacle");
 			for (Miroir mir : liste) {
 			
 				if (mir!=createur) {
-					int[] tab = chercheIntersection(xDebut,yDebut,xFin,yFin,mir.xmin,mir.ymin, mir.xmax,mir.ymax);
+					int [] tab = new int[2];
+					int xSol = mir.eqDroite.resoudreSysteme(this.eqDroite)[0];
+					int ySol = mir.eqDroite.resoudreSysteme(this.eqDroite)[1];
+					tab[0] = xSol;
+					tab[1] = ySol;
+					/*if((xSol>mir.xmax)||(ySol>mir.ymax)||(xSol<mir.xmax)||(ySol<mir.xmax)){
+						tab[0]=-2048;
+						tab[1]=-2048;
+					}*/
 
 					if ((tab[0]!=-2048 && tab[1]!=-2048) && (tab[0]!=2048 && tab[1]!=2048)) {
 						System.out.println("Obstacle trouvé !");
 						xFin=tab[0];
 						yFin=tab[1];
-						rayonRet=mir.creationRayon(this,xFin, yFin);
-	
+						System.out.println(xFin);
+						System.out.println(yFin);
+						this.xFin=250;
+						this.yFin=100;
+						rayonRet = mir.creationRayon(this.xFin, this.yFin, eqDroite);
+						//break;
 					}
 				}
 			
@@ -80,40 +148,11 @@ public class Rayon
 		return s;
 	}
 	
-	
-	public void dessin(Graphics g) {
+	public void dessin (Graphics g) {
 		
 		g.setColor(couleur);
 		g.drawLine(xDebut, yDebut, xFin, yFin);
 	
-		
-	}
-	
-	
-		public int[] chercheIntersection(double xA,double yA, double xB, double yB,double xC,double yC, double xD, double yD) {
-		int[] sol ={-2048,-2048};
-		
-		double ix=xB-xA;
-		double iy=yB-yA;
-			
-		double jx=xD-xC;
-		double jy=yD-yC;
-		
-		double m=0;
-		double k=0;
-		
-		if((ix*jy-iy*jx) != 0){
-			m = (ix*yA-ix*yC-iy*xA+iy*xC)/(ix*jy-iy*jx);
-			k = (-xA*jy+xC*jy+jx*yA-jx*yC)/(ix*jy-iy*jx);
-		}
-			
-		if((ix*jy-iy*jx != 0)&&(m>0)&&(m<1)&&(k>0)&&(k<1)){
-			sol[0]=(int)(xA+k*ix);
-			sol[1]=(int)(yA+k*iy);
-			 
-		}
-		
-		return sol;
 		
 	}
 }

@@ -104,23 +104,27 @@ public class Rayon
 			System.out.println("Recherche d'un obstacle");
 			for (Miroir mir : liste) {
 			
-			if (mir!=createur) {
-				int [] tab = new int[2];
-				int xSol = mir.eqDroite.resoudreSysteme(this.eqDroite)[0];
-				int ySol = mir.eqDroite.resoudreSysteme(this.eqDroite)[1];
-				tab[0] = xSol;
-				tab[1] = ySol;
-			
-				if ((tab[0]!=-2048 && tab[1]!=-2048) && (tab[0]!=2048 && tab[1]!=2048)) {
-					System.out.println("Obstacle trouvé !");
-					xFin=tab[0];
-					yFin=tab[1];
-					System.out.println(xFin);
-					System.out.println(yFin);
-					rayonRet = mir.creationRayon(xFin, yFin, eqDroite);
-					//break;
+				if (mir!=createur) {
+					int [] tab = new int[2];
+					int xSol = mir.eqDroite.resoudreSysteme(this.eqDroite)[0];
+					int ySol = mir.eqDroite.resoudreSysteme(this.eqDroite)[1];
+					tab[0] = xSol;
+					tab[1] = ySol;
+					if((xSol>mir.xmax)||(ySol>mir.ymax)||(xSol<mir.xmax)||(ySol<mir.xmax)){
+						tab[0]=-2048;
+						tab[1]=-2048;
+					}
+
+					if ((tab[0]!=-2048 && tab[1]!=-2048) && (tab[0]!=2048 && tab[1]!=2048)) {
+						System.out.println("Obstacle trouvé !");
+						xFin=tab[0];
+						yFin=tab[1];
+						System.out.println(xFin);
+						System.out.println(yFin);
+						rayonRet = mir.creationRayon(xFin, yFin, eqDroite);
+						//break;
+					}
 				}
-			}
 			
 			}
 		}

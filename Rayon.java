@@ -99,7 +99,6 @@ public class Rayon
 	public Rayon chercheObstacle (ArrayList<Miroir> liste) {
 		
 		Rayon rayonRet = null;
-		//TEST PAUL
 		//this.xFin=200;
 		//this.yFin=200;
 		

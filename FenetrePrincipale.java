@@ -158,9 +158,9 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 			SourceLum lum = new SourceLum (nouvelElement[0],nouvelElement[1],nouvelElement[2],nouvelElement[3], Color.red);
 			listeSources.add(lum);
 			System.out.println("nouvelle source");
-			Rayon ray = lum.creationRayon();
-			listeRayons.add(ray);
-			System.out.println("nouveau rayon");
+			//Rayon ray = lum.creationRayon();
+			//listeRayons.add(ray);
+			//System.out.println("nouveau rayon");
 			
 			/*if(!listeRayons.isEmpty() && !listeMiroirs.isEmpty())
 			{
@@ -199,6 +199,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 				rayons_new.add(ray); //on rajoute la source dans la liste de rayon
 				
 				Rayon ray_suiv = ray.chercheObstacle(listeMiroirs);
+				//System.out.println("blabla"+ray+"blabla");
 				
 				while (ray_suiv != null) { //tant que le rayon suivant n'est pas nul
 					
@@ -210,6 +211,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 				
 			}
 			System.out.println("*Fin actualise Rayon");
+			listeRayons=rayons_new;
 		}
 		
 	

@@ -13,13 +13,16 @@ public class Miroir extends ObjetOptique {
 	Equation eqDroite;
 	
 	public Miroir(int posX, int posY, int angleD, int taille){
+		this.taille = taille;
+		angle=angleD*Math.PI/180;
+		
+		
 		this.xmin = (int)(posX+(Math.cos(angle)*(taille/2)));
 		this.ymin = (int)(posY+(Math.sin(angle)*(taille/2)));
 		this.xmax = (int)(posX-(Math.cos(angle)*(taille/2)));
 		this.ymax = (int)(posY-(Math.sin(angle)*(taille/2)));
 		
-		this.taille = taille;
-		angle=angleD*Math.PI/180;
+		
 		int [] posMiroir = {posX,posY};
 		int [] dirMiroir = new int[2];
 		

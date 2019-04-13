@@ -81,12 +81,13 @@ public class FenetreSaisie extends JDialog implements ActionListener{
 				erreur.showMessageDialog(null, "La taille ne peut pas être nulle","erreur", JOptionPane.ERROR_MESSAGE);
 				envoi =false;
 			}
-			if((nouvelElement[0]-Math.cos(nouvelElement[3])*nouvelElement[3]<50)||(nouvelElement[0]+Math.cos(nouvelElement[3])*nouvelElement[3]>750)){
+			
+			if((nouvelElement[0]-Math.cos(nouvelElement[2]*Math.PI/180)*nouvelElement[3]<50)||(nouvelElement[0]+Math.cos(nouvelElement[2]*Math.PI/180)*nouvelElement[3]>750)){
 				erreur.showMessageDialog(null, "Position x trop grande ou trop petite","erreur", JOptionPane.ERROR_MESSAGE);
 				envoi =false;
 			}
 			
-			if((nouvelElement[0]-Math.sin(nouvelElement[3])*nouvelElement[3]<20)||(nouvelElement[0]+Math.sin(nouvelElement[3])*nouvelElement[3]>320)){
+			if((nouvelElement[1]-Math.sin(nouvelElement[2]*Math.PI/180)*nouvelElement[3]<20)||(nouvelElement[1]+Math.sin(nouvelElement[2]*Math.PI/180)*nouvelElement[3]>320)){
 				erreur.showMessageDialog(null, "Position y trop grande ou trop petite","erreur", JOptionPane.ERROR_MESSAGE);
 				envoi =false;
 			}
@@ -98,10 +99,6 @@ public class FenetreSaisie extends JDialog implements ActionListener{
 				taille.setText("taille");
 				
 				setVisible(false);
-				nouvelElement[0] =0;
-				nouvelElement[1] =0;
-				nouvelElement[2] =0;
-				nouvelElement[3] =0;
 			}
 			
 		}

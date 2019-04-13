@@ -1,7 +1,7 @@
 import java.awt.Graphics ;
 import java.awt.Color ;
 import javax.swing.JFrame ;
-//Version modifiée par Arthur le 27/03
+//Version modifiée par Arthur le 09/04
 public class Miroir extends ObjetOptique {
 	int x;
 	int y;
@@ -9,11 +9,12 @@ public class Miroir extends ObjetOptique {
 	int taille;
 	Equation eqDroite;
 	
-	public Miroir(int posX, int posY, int angleDeg, int taille){
+	public Miroir(int posX, int posY, int angleD, int taille){
 		this.x = posX;
 		this.y = posY;
-		this.angle = (angleDeg)*Math.PI/180;
 		this.taille = taille;
+		angle=angleD*Math.PI/180;
+		int [] posMiroir = {posX,posY};
 		int [] dirMiroir = new int[2];
 		
 		if(angle>Math.PI/2 && angle<Math.PI*3/2)
@@ -27,6 +28,8 @@ public class Miroir extends ObjetOptique {
 			dirMiroir[0] = 100;
 			dirMiroir[1] = (int)(100*Math.tan(angle));
 		}
+		
+		this.eqDroite = new Equation(dirMiroir,posMiroir);
 	}
 	public Rayon creationRayon(int posX, int posY,Equation eq){ //On crée un rayon réfléchi : son angle au miroir est l'opposé de celui du rayon incident
 		
@@ -46,17 +49,17 @@ public class Miroir extends ObjetOptique {
 			nouvelleDir[1] = (int)(100*Math.tan(angleFinal));
 		}
 		
+		System.out.println("Nouveau rayon réfléchi");
 		
-		Rayon nouveauRayon = new Rayon(posX,posY,nouvelleDir,Color.red);
+		Rayon nouveauRayon = new Rayon(posX,posY,nouvelleDir,Color.red, this);
 		return nouveauRayon;
 	}
 	
 	public void dessin(Graphics g){
 		g.setColor(Color.black);
-		g.drawLine( (int)(x+((Math.cos(angle))*taille/2)),(int)(y+(Math.sin(angle)*(taille/2))),  (int)(x-(Math.cos(angle)*(taille/2))),  (int)(y-(Math.sin(angle)*(taille/2))));
+		g.drawLine( (int)(this.x+(Math.cos(angle)*taille/2)),(int)(this.y+(Math.sin(angle)*(taille/2))),  (int)(this.x-(Math.cos(angle)*(taille/2))),  (int)(y-(Math.sin(angle)*(taille/2))));
 	
 		
 			}
 }
-
 

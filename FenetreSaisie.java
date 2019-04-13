@@ -90,6 +90,7 @@ public class FenetreSaisie extends JDialog implements ActionListener{
 				erreur.showMessageDialog(null, "Position y trop grande ou trop petite","erreur", JOptionPane.ERROR_MESSAGE);
 				envoi =false;
 			}
+			
 			if(envoi){
 				angle.setText("angle");
 				posX.setText("posX");
@@ -97,6 +98,10 @@ public class FenetreSaisie extends JDialog implements ActionListener{
 				taille.setText("taille");
 				
 				setVisible(false);
+				nouvelElement[0] =0;
+				nouvelElement[1] =0;
+				nouvelElement[2] =0;
+				nouvelElement[3] =0;
 			}
 			
 		}

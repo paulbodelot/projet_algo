@@ -6,8 +6,6 @@ import java.awt.event.*;
 
 public class FenetreSaisie extends JDialog implements ActionListener{
 	JTextField angle =new JTextField();
-	JTextField posX=new JTextField();
-	JTextField posY=new JTextField();
 	JButton validation = new JButton();
 	JTextField taille=new JTextField();
 	int[] nouvelElement;
@@ -16,11 +14,11 @@ public class FenetreSaisie extends JDialog implements ActionListener{
 	
 	public FenetreSaisie(JFrame fenetre, String titre, boolean modal,int[] coordonnes){
 		super(fenetre,titre,modal);
-		setSize(150,180);
+		setSize(150,150);
 		setLocation(800,450);
 		setLayout(null);
 		setLayout(null);
-		this.setTitle("création d'un nouveau rayon");
+		this.setTitle("Saisie definition");
 		this.setResizable(false);
 		
 		
@@ -30,26 +28,27 @@ public class FenetreSaisie extends JDialog implements ActionListener{
 		conteneur.setLayout(null) ;
 		conteneur.setBounds(0,0,150,180);
 		
-		validation.setBounds(35,130,80,20);
+		validation.setBounds(35,100,100,20);
 		validation.setText("Valider");
 		validation.addActionListener(this);
 
-		angle.setBounds(55,10,40,20);
-		angle.setText("angle");
+		JLabel ang = new JLabel();
+		ang.setText("Angle");
+		ang.setBounds(55,5,40,20);
 		
-		posX.setBounds(55,40,40,20);
-		posX.setText("posX");
+		JLabel ta = new JLabel();
+		ta.setText("Taille");
+		ta.setBounds(55,50,40,20);
+		
+		angle.setBounds(55,25,40,20);
 		
 		
-		posY.setBounds(55,70,40,20);
-		posY.setText("posY");
+		taille.setBounds(55,70,40,20);
+
 		
-		taille.setBounds(55,100,40,20);
-		taille.setText("taille");
-		
+		conteneur.add(ta);
+		conteneur.add(ang);
 		conteneur.add(angle);
-		conteneur.add(posY);
-		conteneur.add(posX);
 		conteneur.add(validation);
 		conteneur.add(taille);
 		
@@ -64,39 +63,29 @@ public class FenetreSaisie extends JDialog implements ActionListener{
 	public void actionPerformed (ActionEvent e){
 		if (e.getSource()== validation){
 			envoi=true;
-			String chaine = posX.getText();
+			/*String chaine = posX.getText();
 			nouvelElement[0] = Integer.parseInt(chaine);
 			
 			chaine = posY.getText();
-			nouvelElement[1] = Integer.parseInt(chaine);
+			nouvelElement[1] = Integer.parseInt(chaine);*/
 			
-			chaine = angle.getText();
+			String chaine = angle.getText();
 			nouvelElement[2] = Integer.parseInt(chaine);
 			
 			chaine = taille.getText();
 			nouvelElement[3] = Integer.parseInt(chaine);
 			
-			//Verification que la saisie est correcte
+					
 			if(nouvelElement[3]==0){
 				erreur.showMessageDialog(null, "La taille ne peut pas être nulle","erreur", JOptionPane.ERROR_MESSAGE);
 				envoi =false;
-			}
-			
-			if((nouvelElement[0]-Math.cos(nouvelElement[2]*Math.PI/180)*nouvelElement[3]<50)||(nouvelElement[0]+Math.cos(nouvelElement[2]*Math.PI/180)*nouvelElement[3]>750)){
-				erreur.showMessageDialog(null, "Position x trop grande ou trop petite","erreur", JOptionPane.ERROR_MESSAGE);
-				envoi =false;
-			}
-			
-			if((nouvelElement[1]-Math.sin(nouvelElement[2]*Math.PI/180)*nouvelElement[3]<20)||(nouvelElement[1]+Math.sin(nouvelElement[2]*Math.PI/180)*nouvelElement[3]>320)){
-				erreur.showMessageDialog(null, "Position y trop grande ou trop petite","erreur", JOptionPane.ERROR_MESSAGE);
-				envoi =false;
-			}
+			} else {
+			envoi=true;} 
 			
 			if(envoi){
-				angle.setText("angle");
-				posX.setText("posX");
-				posY.setText("posY");
-				taille.setText("taille");
+				angle.setText("");
+				
+				taille.setText("");
 				
 				setVisible(false);
 			}

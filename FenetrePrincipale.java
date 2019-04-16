@@ -9,7 +9,7 @@ import java.awt.Color;
 //Version modifiée par Arthur le 09/04
 // Creation de la fenetre
 
-public class FenetrePrincipale extends JFrame implements ActionListener {
+public class FenetrePrincipale extends JFrame implements ActionListener, MouseListener {
 	
 	private JButton boutonMiroir;
 	private JButton boutonLentilleC;
@@ -25,12 +25,16 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 	public ArrayList<Miroir> listeMiroirs;
 	public ArrayList<SourceLum> listeSources;
 	
+	PanelCoord PanneauAffichage = new PanelCoord();
+	JLabel indication = new JLabel();
+	
 	public FenetreSaisie saisieMiroir;
 	public FenetreSaisie saisieSource;
 	
-	//public int nbObjetsPrecedent = 0;
+	int posX = 0;
+	int posY = 0;
 	
-	//SourceLum lum = new SourceLum (200, 250, 0, 50, Color.red);
+	boolean clic = false ;
 	
 	
 	public FenetrePrincipale (ArrayList<Rayon> rayons, ArrayList<Miroir> miroirs, ArrayList<SourceLum> sources) {
@@ -62,68 +66,75 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 		PanneauArriere.setBackground(Color.black);
 		Panneau1.add(PanneauArriere);
 		
-		JPanel PanneauAffichage = new JPanel();
+		
 		PanneauAffichage.setBounds(5,5,700,300);
 		PanneauAffichage.setLayout(null);
 		PanneauAffichage.setBackground(Color.white);
 		PanneauArriere.add(PanneauAffichage);
 		
+	
+		indication.setText("Selection une position dans la zone blanche pour placer l'objet");
+		indication.setFont(PoliceArial_16);
+		indication.setForeground(Color.white);
+		indication.setBounds(30,320,600,100);
+		Panneau1.add(indication);
+		
 		JLabel objetOptique = new JLabel();
-		objetOptique.setText("Objet optique :");
-		objetOptique.setFont(PoliceArial_14);
+		objetOptique.setText("Objet optique");
+		objetOptique.setFont(PoliceArial_16);
 		objetOptique.setForeground(Color.white);
 		objetOptique.setBounds(30,375,200,100);
 		Panneau1.add(objetOptique);
 		
 		JLabel choixCouleur = new JLabel();
-		choixCouleur.setText("Choisir la couleur du rayon");
+		choixCouleur.setText("Source lumineuse");
 		choixCouleur.setForeground(Color.white);
 		choixCouleur.setFont(PoliceArial_16);
-		choixCouleur.setBounds(30,470,200,100);
+		choixCouleur.setBounds(30,445,200,100);
 		Panneau1.add(choixCouleur);
 		
 		boutonRayonRouge = new JButton("Rouge");
-		boutonRayonRouge.setBounds(200,470,100,50);
+		boutonRayonRouge.setBounds(200,470,120,50);
 		boutonRayonRouge.setBackground(Color.red);
 		boutonRayonRouge.setForeground(Color.black);
 		boutonRayonRouge.setFont(PoliceArial_16);
 		Panneau1.add(boutonRayonRouge);
-		boutonRayonRouge.addActionListener(this);
+		//boutonRayonRouge.addActionListener(this);
 		
 		boutonRayonBleu = new JButton("Bleu");
-		boutonRayonBleu.setBounds(310,470,100,50);
+		boutonRayonBleu.setBounds(330,470,120,50);
 		boutonRayonBleu.setBackground(Color.blue);
 		boutonRayonBleu.setForeground(Color.black);
 		boutonRayonBleu.setFont(PoliceArial_16);
 		Panneau1.add(boutonRayonBleu);
-		boutonRayonBleu.addActionListener(this);
+		//boutonRayonBleu.addActionListener(this);
 		
 		boutonRayonVert = new JButton("Vert");
-		boutonRayonVert.setBounds(420,470,100,50);
+		boutonRayonVert.setBounds(470,470,120,50);
 		boutonRayonVert.setBackground(Color.green);
 		boutonRayonVert.setForeground(Color.black);
 		boutonRayonVert.setFont(PoliceArial_16);
 		Panneau1.add(boutonRayonVert);
-		boutonRayonVert.addActionListener(this);
+		//boutonRayonVert.addActionListener(this);
 		
 		boutonMiroir = new JButton("Miroir");
-		boutonMiroir.setBounds(200,400,100,50);
+		boutonMiroir.setBounds(200,400,120,50);
 		boutonMiroir.setBackground(Color.black);
 		boutonMiroir.setForeground(Color.white);
 		boutonMiroir.setFont(PoliceArial_16);
 		Panneau1.add(boutonMiroir);
-		boutonMiroir.addActionListener(this); 
+		//boutonMiroir.addActionListener(this); 
 		
 		boutonLentilleC = new JButton("Lentille C");
 		boutonLentilleC.setFont(PoliceArial_14);
-		boutonLentilleC.setBounds(310,400,100,50);
+		boutonLentilleC.setBounds(330,400,120,50);
 		boutonLentilleC.setBackground(Color.black);
 		boutonLentilleC.setForeground(Color.white);
 		Panneau1.add(boutonLentilleC);
 		
 		boutonLentilleD = new JButton("Lentille D");
 		boutonLentilleD.setFont(PoliceArial_14);
-		boutonLentilleD.setBounds(420,400,100,50);
+		boutonLentilleD.setBounds(470,400,120,50);
 		boutonLentilleD.setBackground(Color.black);
 		boutonLentilleD.setForeground(Color.white);
 		Panneau1.add(boutonLentilleD);
@@ -131,69 +142,83 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 		this.add(Panneau1);
 				
 		this.setVisible(true);
+		
+		boutonRayonRouge.addActionListener(this);
+		boutonRayonBleu.addActionListener(this);
+		boutonRayonVert.addActionListener(this);
+		boutonMiroir.addActionListener(this);
+		PanneauAffichage.addMouseListener(this);
+		
+		
 	}
 
   // A ajouter une fois les objets optiques et le rayon créés
 	public void actionPerformed (ActionEvent e){
+		JOptionPane erreur = new JOptionPane();
 		
 		if (e.getSource()== boutonMiroir){
-			saisieMiroir.setVisible(true);
-			Miroir nouveauMiroir = new Miroir(nouvelElement[0],nouvelElement[1],nouvelElement[2],nouvelElement[3]);
-			listeMiroirs.add(nouveauMiroir);
-			repaint();
+			if (clic) {
+				saisieMiroir.setVisible(true);
+				Miroir nouveauMiroir = new Miroir(posX,posY,nouvelElement[2],nouvelElement[3]);
+				listeMiroirs.add(nouveauMiroir);
+			} else {
+				erreur.showMessageDialog(null, "Veuillez indiquer une position avant de selctionner l'objet","Erreur", JOptionPane.ERROR_MESSAGE);
+			}
+			
 		}
 		
 		
 		if (e.getSource()== boutonRayonVert){
-			System.out.println("*Debut liste Rayons");
-			for(Rayon ray : listeRayons) {
-				System.out.println(ray);
-				
+			if (clic) {
+				saisieSource.setVisible(true);
+				SourceLum lum = new SourceLum (posX,posY,nouvelElement[2],nouvelElement[3], Color.green);
+				listeSources.add(lum);
+			} else {
+				erreur.showMessageDialog(null, "Veuillez indiquer une position avant de selctionner l'objet","Erreur", JOptionPane.ERROR_MESSAGE);
 			}
-			System.out.println("*Fin liste Rayons");
-			repaint();
+			
+		
 		}
 		if (e.getSource()== boutonRayonRouge){
-			saisieSource.setVisible(true);
-			SourceLum lum = new SourceLum (nouvelElement[0],nouvelElement[1],nouvelElement[2],nouvelElement[3], Color.red);
-			listeSources.add(lum);
-			System.out.println("nouvelle source");
-			//Rayon ray = lum.creationRayon();
-			//listeRayons.add(ray);
-			//System.out.println("nouveau rayon");
-			
-			/*if(!listeRayons.isEmpty() && !listeMiroirs.isEmpty())
-			{
-				ray.chercheObstacle(listeMiroirs);
-				
-			}*/
+			if (clic) {
+				saisieSource.setVisible(true);
+				SourceLum lum = new SourceLum (posX,posY,nouvelElement[2],nouvelElement[3], Color.red);
+				listeSources.add(lum);
+			} else {
+				erreur.showMessageDialog(null, "Veuillez indiquer une position avant de selctionner l'objet","Erreur", JOptionPane.ERROR_MESSAGE);
+			}
 		}
+		if (e.getSource()== boutonRayonBleu){
+			if (clic) {
+				saisieSource.setVisible(true);
+				SourceLum lum = new SourceLum (posX,posY,nouvelElement[2],nouvelElement[3], Color.blue);
+				listeSources.add(lum);
+			} else {
+				erreur.showMessageDialog(null, "Veuillez indiquer une position avant de selctionner l'objet","Erreur", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		nouvelElement[3]=0;
+
+		
 		actualiseRayons();
 		repaint();
 	}
 		
 
 		
-		/*public boolean objetAjoute()
-		{
-			if(nbObjetsPrecedent != listeMiroirs.size())
-			{
-				nbObjetsPrecedent = listeMiroirs.size();
-				System.out.println("Objet ajouté");
-				return true;
-			}
-			
-			else return false;
-		}*/
-		
 		
 		public void actualiseRayons(){//ici pour chaque modification on recalcul tous les rayons
 			
-			System.out.println("*Debut actualise Rayon");
+			
+			
+			
+			
+			//System.out.println("*Debut actualise Rayon");
 			ArrayList<Rayon> rayons_new=new ArrayList <Rayon>(); //on crée une nouvelle liste de rayons
 			
 			for (SourceLum src : listeSources) { //on fait défiler la liste des sources
 				
+				if (src.taille!=0) {
 				Rayon ray = src.creationRayon(); 
 				
 				rayons_new.add(ray); //on rajoute la source dans la liste de rayon
@@ -204,29 +229,39 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 					
 					rayons_new.add(ray_suiv); //on ajoute le nouveau rayon
 					ray_suiv = ray_suiv.chercheObstacle(listeMiroirs); //puis on met le rayon prochaine dans la variable proviosoire
-					System.out.println("Rayon ajoute de actualise Rayon");
+					//System.out.println("Rayon ajoute de actualise Rayon");
 					
 				}
-				
+				}
 			}
-			System.out.println("*Fin actualise Rayon");
+			
+			//System.out.println("*Fin actualise Rayon");
 			listeRayons=rayons_new;
-			repaint();
 		}
+		
+		public void mouseClicked(MouseEvent ev) {
+			
+			posX = ev.getX();
+			posY = ev.getY();
+			indication.setText("L'objet sera placé à la position x = "+posX+" et y = "+posY);
+			clic = true;
+			
+			}
+ 
+	public void mousePressed(MouseEvent ev) {}
+ 
+	public void mouseReleased(MouseEvent ev) {}
+ 
+	public void mouseEntered(MouseEvent ev) {}
+ 
+	public void mouseExited(MouseEvent ev) {}
 		
 	
 	public void paint(Graphics g){
-		for(Miroir miroir:listeMiroirs){
-			miroir.dessin(g);
-		}
 		
-		for(SourceLum src:listeSources){
-			src.dessin(g);
-		}
+		PanneauAffichage.dessiner(listeRayons, listeMiroirs, listeSources);
 		
-		for(Rayon ray:listeRayons){
-			ray.dessin(g);
-		}
+
 
 	}
 		

@@ -1,7 +1,6 @@
 import java.awt.Graphics ;
 import java.awt.Color ;
 import javax.swing.JFrame ;
-//Version modifiée par Arthur le 09/04
 public class Miroir extends ObjetOptique {
 	int xmin;
 	int ymin;
@@ -10,7 +9,6 @@ public class Miroir extends ObjetOptique {
 	
 	double angle;
 	int taille;
-	Equation eqDroite;
 	
 	public Miroir(int posX, int posY, int angleD, int taille){
 		this.taille = taille;
@@ -18,49 +16,43 @@ public class Miroir extends ObjetOptique {
 		
 		
 		this.xmin = (int)(posX+(Math.cos(angle)*(taille/2)));
-		this.ymin = (int)(posY+(Math.sin(angle)*(taille/2)));
+		this.ymin = (int)(posY-(Math.sin(angle)*(taille/2)));
 		this.xmax = (int)(posX-(Math.cos(angle)*(taille/2)));
-		this.ymax = (int)(posY-(Math.sin(angle)*(taille/2)));
+		this.ymax = (int)(posY+(Math.sin(angle)*(taille/2)));
 		
-		
-		int [] posMiroir = {posX,posY};
-		int [] dirMiroir = new int[2];
-		
-		if(angle>Math.PI/2 && angle<Math.PI*3/2)
-		{
-			dirMiroir[0] = -100;
-			dirMiroir[1] = -(int)(100*Math.tan(angle));
-		}
-		
-		else
-		{
-			dirMiroir[0] = 100;
-			dirMiroir[1] = (int)(100*Math.tan(angle));
-		}
-		
-		this.eqDroite = new Equation(dirMiroir,posMiroir);
 	}
-	public Rayon creationRayon(int posX, int posY,Equation eq){ //On crée un rayon réfléchi : son angle au miroir est l'opposé de celui du rayon incident
-		
-		int[]nouvelleDir = new int[2];
-		double angleInit = Math.atan2(eq.vDir[1],eq.vDir[0]);
-		double angleFinal = 2*this.angle-angleInit;
-		
-		if(angleFinal>Math.PI/2 && angleFinal<Math.PI*3/2)
-		{
-			nouvelleDir[0] = -100;
-			nouvelleDir[1] = -(int)(100*Math.tan(angleFinal));
+	public Rayon creationRayon(Rayon rIncident, int xD, int yD){ //On crée un rayon réfléchi : son angle au miroir est l'opposé de celui du rayon incident
+		double angleIncident = Math.PI/2;
+		Rayon nouveauRayon;
+		if(xD-rIncident.xDebut!=0){
+			angleIncident =-Math.atan(((double)(yD)-(double)(rIncident.yDebut))/((double)(xD)-(double)(rIncident.xDebut)));
 		}
 		
-		else
-		{
-			nouvelleDir[0] = 100;
-			nouvelleDir[1] = (int)(100*Math.tan(angleFinal));
+		double deltaAngle=Math.abs(angleIncident-this.angle);
+		double angleReflexion = 0;
+		int xFin=0;
+		int yFin=0;
+		
+		angleReflexion=this.angle+deltaAngle;
+		
+		
+		angleReflexion=2*this.angle-angleIncident;
+		
+		if(xD>=rIncident.xDebut){
+			yFin= (int)(yD-Math.sin(angleReflexion)*900);
+			xFin=(int)(xD+Math.cos(angleReflexion)*900);
 		}
+		if(xD<rIncident.xDebut){
+			yFin= (int)(yD+Math.sin(angleReflexion)*900);
+			xFin=(int)(xD-Math.cos(angleReflexion)*900);
+		}
+			
 		
-		System.out.println("Nouveau rayon réfléchi");
 		
-		Rayon nouveauRayon = new Rayon(posX,posY,nouvelleDir,Color.red, this);
+		
+		
+		nouveauRayon = new Rayon (xD, yD, xFin, yFin,rIncident.couleur,this);
+		
 		return nouveauRayon;
 	}
 	
@@ -71,5 +63,4 @@ public class Miroir extends ObjetOptique {
 		
 			}
 }
-
 

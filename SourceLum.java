@@ -20,15 +20,21 @@ public class SourceLum {
 	
 	public Rayon creationRayon () {
 		
-		Rayon ray = new Rayon (this.x, this.y, 700-this.x, this.y, couleur_rayon); 
+		double angleRa=angle*Math.PI/180;
+		int xmin = x;
+		int ymin = y;
+		int xmax = (int)(x+(Math.cos(angleRa)*1000));
+		int ymax = (int)(y-(Math.sin(angleRa)*1000));
+		
+		Rayon ray = new Rayon (xmin, ymin, xmax, ymax, couleur_rayon,null); 
 		//Les limites de la zone de travail sont 700 et 400, d'ou les calculs
-		System.out.println("Le rayon cree commence en x = "+x+" et en y = "+y+"\n puis termine en x = "+(700-this.x)+" et en y = "+this.y);
+		System.out.println("Le rayon cree commence en x = "+x+" et en y = "+y+"\n puis termine en x = "+(700-this.x)+" et en y = "+(300-this.y));
 		return ray;
 		
 	}
 	
 	public void dessin (Graphics g) {
-		g.setColor(Color.red);
+		g.setColor(couleur_rayon);
 		g.fillRect(x-taille/2, y-taille/2, taille, taille);
 	
 		

@@ -23,6 +23,9 @@ public class Miroir extends ObjetOptique {
 	}
 	public Rayon creationRayon(Rayon rIncident, int xD, int yD){ //On crée un rayon réfléchi : son angle au miroir est l'opposé de celui du rayon incident
 		double angleIncident = Math.PI/2;
+		if(yD>rIncident.yDebut){
+			angleIncident=-Math.PI/2;
+		}
 		Rayon nouveauRayon;
 		if(xD-rIncident.xDebut!=0){
 			angleIncident =-Math.atan(((double)(yD)-(double)(rIncident.yDebut))/((double)(xD)-(double)(rIncident.xDebut)));

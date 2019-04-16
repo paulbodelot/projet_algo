@@ -7,20 +7,25 @@ public class SourceLum {
 	int taille;
 	int angle;
 	Color couleur_rayon;
+	int nbreRayons;
+	double ouverture;
 
-	public SourceLum (int x, int y, int angle, int taille, Color coul) {
+	public SourceLum (int x, int y, int angle, int taille, Color coul, int nbreRayons, int ouverture) {
 	
 		this.x = x;
 		this.y = y;
 		this.taille = taille;
 		this.angle = angle;
 		couleur_rayon=coul;
+		this.nbreRayons = nbreRayons;
+		this.ouverture = ouverture*Math.PI/180;
 
 	}
 	
-	public Rayon creationRayon () {
+	
+	public Rayon creationRayon (int i) {
 		
-		double angleRa=angle*Math.PI/180;
+		double angleRa=angle*Math.PI/180+(i*ouverture/nbreRayons);
 		int xmin = x;
 		int ymin = y;
 		int xmax = (int)(x+(Math.cos(angleRa)*1000));

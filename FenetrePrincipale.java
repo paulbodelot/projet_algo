@@ -6,7 +6,6 @@ import java.awt.Font;
 import java.util.ArrayList; 
 import java.awt.Color;
 
-//Version modifiée par Arthur le 09/04
 // Creation de la fenetre
 
 public class FenetrePrincipale extends JFrame implements ActionListener, MouseListener {
@@ -18,6 +17,9 @@ public class FenetrePrincipale extends JFrame implements ActionListener, MouseLi
 	private JButton boutonRayonBleu;
 	private JButton boutonRayonVert;
 	private JTextArea Affichage;
+	private JTextField saisieNbreRayon;
+	private JTextField saisieAngle;
+	private JButton suppression;
 	
 	public int[] nouvelElement = new int [4]; //transmission des valeurs saisie par les fenetres de saisie
 	
@@ -93,6 +95,20 @@ public class FenetrePrincipale extends JFrame implements ActionListener, MouseLi
 		choixCouleur.setBounds(30,445,200,100);
 		Panneau1.add(choixCouleur);
 		
+		JLabel nbRayon = new JLabel();
+		nbRayon.setText("Nombre de rayons");
+		//choixCouleur.setForeground(Color.white);
+		//choixCouleur.setFont(PoliceArial_16);
+		nbRayon.setBounds(650,470,150,20);
+		Panneau1.add(nbRayon);
+		
+		JLabel nbAngle = new JLabel();
+		nbAngle.setText("Angle d'ouverture");
+		//choixCouleur.setForeground(Color.white);
+		//choixCouleur.setFont(PoliceArial_16);
+		nbAngle.setBounds(650,500,150,20);
+		Panneau1.add(nbAngle);
+		
 		boutonRayonRouge = new JButton("Rouge");
 		boutonRayonRouge.setBounds(200,470,120,50);
 		boutonRayonRouge.setBackground(Color.red);
@@ -115,6 +131,21 @@ public class FenetrePrincipale extends JFrame implements ActionListener, MouseLi
 		boutonRayonVert.setForeground(Color.black);
 		boutonRayonVert.setFont(PoliceArial_16);
 		Panneau1.add(boutonRayonVert);
+		
+		saisieNbreRayon = new JTextField();
+		saisieNbreRayon.setBounds(600,470,30,20);
+		Panneau1.add(saisieNbreRayon);
+		
+		saisieAngle = new JTextField();
+		saisieAngle.setBounds(600,500,30,20);
+		Panneau1.add(saisieAngle);
+		
+		suppression = new JButton("Tout supprimer");
+		suppression.setBounds(640,530,150,30);
+		suppression.setBackground(Color.black);
+		Panneau1.add(suppression);
+		
+		
 		//boutonRayonVert.addActionListener(this);
 		
 		boutonMiroir = new JButton("Miroir");
@@ -148,6 +179,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener, MouseLi
 		boutonRayonVert.addActionListener(this);
 		boutonMiroir.addActionListener(this);
 		PanneauAffichage.addMouseListener(this);
+		suppression.addActionListener(this);
 		
 		
 	}
@@ -171,7 +203,10 @@ public class FenetrePrincipale extends JFrame implements ActionListener, MouseLi
 		if (e.getSource()== boutonRayonVert){
 			if (clic) {
 				saisieSource.setVisible(true);
-				SourceLum lum = new SourceLum (posX,posY,nouvelElement[2],nouvelElement[3], Color.green);
+				int nbreRayon = Integer.parseInt(saisieNbreRayon.getText());
+				int angle= Integer.parseInt(saisieAngle.getText());
+				
+				SourceLum lum = new SourceLum (posX,posY,nouvelElement[2],nouvelElement[3], Color.green,nbreRayon, angle);
 				listeSources.add(lum);
 			} else {
 				erreur.showMessageDialog(null, "Veuillez indiquer une position avant de selctionner l'objet","Erreur", JOptionPane.ERROR_MESSAGE);
@@ -182,7 +217,9 @@ public class FenetrePrincipale extends JFrame implements ActionListener, MouseLi
 		if (e.getSource()== boutonRayonRouge){
 			if (clic) {
 				saisieSource.setVisible(true);
-				SourceLum lum = new SourceLum (posX,posY,nouvelElement[2],nouvelElement[3], Color.red);
+				int nbreRayon = Integer.parseInt(saisieNbreRayon.getText());
+				int angle=Integer.parseInt(saisieAngle.getText());
+				SourceLum lum = new SourceLum (posX,posY,nouvelElement[2],nouvelElement[3], Color.red,nbreRayon, angle);
 				listeSources.add(lum);
 			} else {
 				erreur.showMessageDialog(null, "Veuillez indiquer une position avant de selctionner l'objet","Erreur", JOptionPane.ERROR_MESSAGE);
@@ -191,13 +228,22 @@ public class FenetrePrincipale extends JFrame implements ActionListener, MouseLi
 		if (e.getSource()== boutonRayonBleu){
 			if (clic) {
 				saisieSource.setVisible(true);
-				SourceLum lum = new SourceLum (posX,posY,nouvelElement[2],nouvelElement[3], Color.blue);
+				int nbreRayon = Integer.parseInt(saisieNbreRayon.getText());
+				int angle=Integer.parseInt(saisieAngle.getText());
+				SourceLum lum = new SourceLum (posX,posY,nouvelElement[2],nouvelElement[3], Color.blue,nbreRayon, angle);
 				listeSources.add(lum);
 			} else {
 				erreur.showMessageDialog(null, "Veuillez indiquer une position avant de selctionner l'objet","Erreur", JOptionPane.ERROR_MESSAGE);
 			}
 		}
-		nouvelElement[3]=0;
+		nouvelElement[3]=0; // 
+		
+		if(e.getSource()==suppression){
+			listeMiroirs.clear();
+			listeRayons.clear();
+			listeSources.clear();
+			
+		}
 
 		
 		actualiseRayons();
@@ -219,19 +265,23 @@ public class FenetrePrincipale extends JFrame implements ActionListener, MouseLi
 			for (SourceLum src : listeSources) { //on fait défiler la liste des sources
 				
 				if (src.taille!=0) {
-				Rayon ray = src.creationRayon(); 
+					for(int i = 0; i<src.nbreRayons; i++){
+						Rayon ray = src.creationRayon(i);
+						rayons_new.add(ray); //on rajoute la source dans la liste de rayon
 				
-				rayons_new.add(ray); //on rajoute la source dans la liste de rayon
+						Rayon ray_suiv = ray.chercheObstacle(listeMiroirs);
 				
-				Rayon ray_suiv = ray.chercheObstacle(listeMiroirs);
-				
-				while (ray_suiv != null) { //tant que le rayon suivant n'est pas nul
+						while (ray_suiv != null) { //tant que le rayon suivant n'est pas nul
 					
-					rayons_new.add(ray_suiv); //on ajoute le nouveau rayon
-					ray_suiv = ray_suiv.chercheObstacle(listeMiroirs); //puis on met le rayon prochaine dans la variable proviosoire
+							rayons_new.add(ray_suiv); //on ajoute le nouveau rayon
+							ray_suiv = ray_suiv.chercheObstacle(listeMiroirs); //puis on met le rayon prochaine dans la variable proviosoire
 					//System.out.println("Rayon ajoute de actualise Rayon");
 					
-				}
+						}
+						
+					} 
+				
+				
 				}
 			}
 			

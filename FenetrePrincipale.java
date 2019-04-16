@@ -134,10 +134,12 @@ public class FenetrePrincipale extends JFrame implements ActionListener, MouseLi
 		
 		saisieNbreRayon = new JTextField();
 		saisieNbreRayon.setBounds(600,470,30,20);
+		saisieNbreRayon.setText("1");
 		Panneau1.add(saisieNbreRayon);
 		
 		saisieAngle = new JTextField();
 		saisieAngle.setBounds(600,500,30,20);
+		saisieAngle.setText("0");
 		Panneau1.add(saisieAngle);
 		
 		suppression = new JButton("Tout supprimer");

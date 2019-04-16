@@ -40,6 +40,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener, MouseLi
 	
 	
 	public FenetrePrincipale (ArrayList<Rayon> rayons, ArrayList<Miroir> miroirs, ArrayList<SourceLum> sources) {
+		
 		this.listeRayons=rayons;
 		this.listeMiroirs=miroirs;
 		this.listeSources=sources;
@@ -97,15 +98,11 @@ public class FenetrePrincipale extends JFrame implements ActionListener, MouseLi
 		
 		JLabel nbRayon = new JLabel();
 		nbRayon.setText("Nombre de rayons");
-		//choixCouleur.setForeground(Color.white);
-		//choixCouleur.setFont(PoliceArial_16);
 		nbRayon.setBounds(650,470,150,20);
 		Panneau1.add(nbRayon);
 		
 		JLabel nbAngle = new JLabel();
 		nbAngle.setText("Angle d'ouverture");
-		//choixCouleur.setForeground(Color.white);
-		//choixCouleur.setFont(PoliceArial_16);
 		nbAngle.setBounds(650,500,150,20);
 		Panneau1.add(nbAngle);
 		
@@ -115,7 +112,6 @@ public class FenetrePrincipale extends JFrame implements ActionListener, MouseLi
 		boutonRayonRouge.setForeground(Color.black);
 		boutonRayonRouge.setFont(PoliceArial_16);
 		Panneau1.add(boutonRayonRouge);
-		//boutonRayonRouge.addActionListener(this);
 		
 		boutonRayonBleu = new JButton("Bleu");
 		boutonRayonBleu.setBounds(330,470,120,50);
@@ -123,7 +119,6 @@ public class FenetrePrincipale extends JFrame implements ActionListener, MouseLi
 		boutonRayonBleu.setForeground(Color.black);
 		boutonRayonBleu.setFont(PoliceArial_16);
 		Panneau1.add(boutonRayonBleu);
-		//boutonRayonBleu.addActionListener(this);
 		
 		boutonRayonVert = new JButton("Vert");
 		boutonRayonVert.setBounds(470,470,120,50);
@@ -147,16 +142,12 @@ public class FenetrePrincipale extends JFrame implements ActionListener, MouseLi
 		suppression.setBackground(Color.black);
 		Panneau1.add(suppression);
 		
-		
-		//boutonRayonVert.addActionListener(this);
-		
 		boutonMiroir = new JButton("Miroir");
 		boutonMiroir.setBounds(200,400,120,50);
 		boutonMiroir.setBackground(Color.black);
 		boutonMiroir.setForeground(Color.white);
 		boutonMiroir.setFont(PoliceArial_16);
 		Panneau1.add(boutonMiroir);
-		//boutonMiroir.addActionListener(this); 
 		
 		boutonLentilleC = new JButton("Lentille C");
 		boutonLentilleC.setFont(PoliceArial_14);
@@ -186,8 +177,8 @@ public class FenetrePrincipale extends JFrame implements ActionListener, MouseLi
 		
 	}
 
-  // A ajouter une fois les objets optiques et le rayon créés
 	public void actionPerformed (ActionEvent e){
+		
 		JOptionPane erreur = new JOptionPane();
 		
 		if (e.getSource()== boutonMiroir){
@@ -198,9 +189,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener, MouseLi
 			} else {
 				erreur.showMessageDialog(null, "Veuillez indiquer une position avant de selctionner l'objet","Erreur", JOptionPane.ERROR_MESSAGE);
 			}
-			
 		}
-		
 		
 		if (e.getSource()== boutonRayonVert){
 			if (clic) {
@@ -213,9 +202,8 @@ public class FenetrePrincipale extends JFrame implements ActionListener, MouseLi
 			} else {
 				erreur.showMessageDialog(null, "Veuillez indiquer une position avant de selctionner l'objet","Erreur", JOptionPane.ERROR_MESSAGE);
 			}
-			
-		
 		}
+		
 		if (e.getSource()== boutonRayonRouge){
 			if (clic) {
 				saisieSource.setVisible(true);
@@ -227,6 +215,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener, MouseLi
 				erreur.showMessageDialog(null, "Veuillez indiquer une position avant de selctionner l'objet","Erreur", JOptionPane.ERROR_MESSAGE);
 			}
 		}
+		
 		if (e.getSource()== boutonRayonBleu){
 			if (clic) {
 				saisieSource.setVisible(true);
@@ -238,67 +227,59 @@ public class FenetrePrincipale extends JFrame implements ActionListener, MouseLi
 				erreur.showMessageDialog(null, "Veuillez indiquer une position avant de selctionner l'objet","Erreur", JOptionPane.ERROR_MESSAGE);
 			}
 		}
-		nouvelElement[3]=0; // 
+		
+		nouvelElement[3]=0; //afin d'eviter la creation de rayon non voulus, on reenitialise a zero
 		
 		if(e.getSource()==suppression){
 			listeMiroirs.clear();
 			listeRayons.clear();
 			listeSources.clear();
-			
 		}
 
-		
+		//mise a jour des rayons puis de l'affichage
 		actualiseRayons();
 		repaint();
 	}
-		
-
-		
-		
-		public void actualiseRayons(){//ici pour chaque modification on recalcul tous les rayons
+	
+	public void actualiseRayons(){//ici pour chaque modification on recalcul tous les rayons
+	
+		ArrayList<Rayon> rayons_new=new ArrayList <Rayon>(); //on crée une nouvelle liste de rayons
 			
-			
-			
-			
-			
-			//System.out.println("*Debut actualise Rayon");
-			ArrayList<Rayon> rayons_new=new ArrayList <Rayon>(); //on crée une nouvelle liste de rayons
-			
-			for (SourceLum src : listeSources) { //on fait défiler la liste des sources
+		for (SourceLum src : listeSources) { //on fait défiler la liste des sources
 				
-				if (src.taille!=0) {
-					for(int i = 0; i<src.nbreRayons; i++){
-						Rayon ray = src.creationRayon(i);
-						rayons_new.add(ray); //on rajoute la source dans la liste de rayon
+			if (src.taille!=0) {
 				
-						Rayon ray_suiv = ray.chercheObstacle(listeMiroirs);
-				
-						while (ray_suiv != null) { //tant que le rayon suivant n'est pas nul
+				for(int i = 0; i<src.nbreRayons; i++){
 					
-							rayons_new.add(ray_suiv); //on ajoute le nouveau rayon
-							ray_suiv = ray_suiv.chercheObstacle(listeMiroirs); //puis on met le rayon prochaine dans la variable proviosoire
-					//System.out.println("Rayon ajoute de actualise Rayon");
+					Rayon ray = src.creationRayon(i);
+					rayons_new.add(ray); //on rajoute la source dans la liste de rayon
+				
+					Rayon ray_suiv = ray.chercheObstacle(listeMiroirs);
+				
+					while (ray_suiv != null) { //tant que le rayon suivant n'est pas nul
 					
-						}
+						rayons_new.add(ray_suiv); //on ajoute le nouveau rayon
+						ray_suiv = ray_suiv.chercheObstacle(listeMiroirs); //puis on met le rayon prochaine dans la variable proviosoire
+					
+					}
 						
-					} 
+				} 
 				
-				
-				}
 			}
-			
-			//System.out.println("*Fin actualise Rayon");
-			listeRayons=rayons_new;
 		}
 		
-		public void mouseClicked(MouseEvent ev) {
+		listeRayons=rayons_new; //renvoi de la nouvelle liste de rayons
 			
-			posX = ev.getX();
-			posY = ev.getY();
-			indication.setText("L'objet sera placé à la position x = "+posX+" et y = "+posY);
-			clic = true;
+	}
+		
+	public void mouseClicked(MouseEvent ev) {
 			
-			}
+		posX = ev.getX();
+		posY = ev.getY();
+		indication.setText("L'objet sera placé à la position x = "+posX+" et y = "+posY);
+		clic = true;
+			
+	}
  
 	public void mousePressed(MouseEvent ev) {}
  
@@ -313,11 +294,6 @@ public class FenetrePrincipale extends JFrame implements ActionListener, MouseLi
 		
 		PanneauAffichage.dessiner(listeRayons, listeMiroirs, listeSources);
 		
-
-
 	}
-		
-
-
 	
 }

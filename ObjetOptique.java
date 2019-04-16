@@ -2,4 +2,3 @@ abstract class ObjetOptique{
 	
 	
 }
-

@@ -32,8 +32,6 @@ public class SourceLum {
 		int ymax = (int)(y-(Math.sin(angleRa)*1000));
 		
 		Rayon ray = new Rayon (xmin, ymin, xmax, ymax, couleur_rayon,null); 
-		//Les limites de la zone de travail sont 700 et 400, d'ou les calculs
-		System.out.println("Le rayon cree commence en x = "+x+" et en y = "+y+"\n puis termine en x = "+(700-this.x)+" et en y = "+(300-this.y));
 		return ray;
 		
 	}

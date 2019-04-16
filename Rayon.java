@@ -56,10 +56,7 @@ public class Rayon
 			
 			}
 		}
-		if(rayonRet == null)
-		{
-			rayonRet = null;
-		}
+		
 		return rayonRet;
 		
 		

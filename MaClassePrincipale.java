@@ -1,8 +1,6 @@
 import java.util.ArrayList; 
 public class MaClassePrincipale {
 
-//Version modifiée par Arthur le 09/04
-	
 	public static void main (String[] args) {
 		boolean fermetureDuProgramme = false;
 		ArrayList<Miroir> miroirs=new ArrayList <Miroir>();

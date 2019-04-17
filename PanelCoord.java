@@ -6,10 +6,10 @@ import java.util.*;
 public class PanelCoord extends JPanel{ 
 	
 	public ArrayList<Rayon> listeRayons;
-	public ArrayList<Miroir> listeMiroirs;
+	public ArrayList<ObjetOptique> listeMiroirs;
 	public ArrayList<SourceLum> listeSources;
 	
-	public void dessiner(ArrayList<Rayon> listeRayons, ArrayList<Miroir> listeMiroirs, ArrayList<SourceLum> listeSources){
+	public void dessiner(ArrayList<Rayon> listeRayons, ArrayList<ObjetOptique> listeMiroirs, ArrayList<SourceLum> listeSources){
 		
 		this.listeRayons=listeRayons;
 		this.listeMiroirs=listeMiroirs;
@@ -28,7 +28,7 @@ public class PanelCoord extends JPanel{
 			g.drawLine(ray.xDebut, ray.yDebut, ray.xFin, ray.yFin);
 			
 		}
-		for(Miroir miroir:listeMiroirs){
+		for(ObjetOptique miroir:listeMiroirs){
 			g.setColor(Color.black);
 			g.drawLine(miroir.xmin,miroir.ymin,miroir.xmax,miroir.ymax);
 		}

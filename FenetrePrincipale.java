@@ -11,7 +11,7 @@ import java.awt.Color;
 public class FenetrePrincipale extends JFrame implements ActionListener, MouseListener {
 	
 	private JButton boutonMiroir;
-	private JButton boutonLentilleC;
+	private JButton boutonLameMince;
 	private JButton boutonLentilleD;
 	private JButton boutonRayonRouge;
 	private JButton boutonRayonBleu;
@@ -24,7 +24,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener, MouseLi
 	public int[] nouvelElement = new int [4]; //transmission des valeurs saisie par les fenetres de saisie
 	
 	public ArrayList<Rayon> listeRayons;
-	public ArrayList<Miroir> listeMiroirs;
+	public ArrayList<ObjetOptique> listeMiroirs; // liste de miroirs et de lames semi-réfléchissantes
 	public ArrayList<SourceLum> listeSources;
 	
 	PanelCoord PanneauAffichage = new PanelCoord();
@@ -39,7 +39,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener, MouseLi
 	boolean clic = false ;
 	
 	
-	public FenetrePrincipale (ArrayList<Rayon> rayons, ArrayList<Miroir> miroirs, ArrayList<SourceLum> sources) {
+	public FenetrePrincipale (ArrayList<Rayon> rayons, ArrayList<ObjetOptique> miroirs, ArrayList<SourceLum> sources) {
 		
 		this.listeRayons=rayons;
 		this.listeMiroirs=miroirs;
@@ -149,12 +149,12 @@ public class FenetrePrincipale extends JFrame implements ActionListener, MouseLi
 		boutonMiroir.setFont(PoliceArial_16);
 		Panneau1.add(boutonMiroir);
 		
-		boutonLentilleC = new JButton("Lentille C");
-		boutonLentilleC.setFont(PoliceArial_14);
-		boutonLentilleC.setBounds(330,400,120,50);
-		boutonLentilleC.setBackground(Color.black);
-		boutonLentilleC.setForeground(Color.white);
-		Panneau1.add(boutonLentilleC);
+		boutonLameMince = new JButton("Lame Mince");
+		boutonLameMince.setFont(PoliceArial_14);
+		boutonLameMince.setBounds(330,400,120,50);
+		boutonLameMince.setBackground(Color.black);
+		boutonLameMince.setForeground(Color.white);
+		Panneau1.add(boutonLameMince);
 		
 		boutonLentilleD = new JButton("Lentille D");
 		boutonLentilleD.setFont(PoliceArial_14);
@@ -186,6 +186,16 @@ public class FenetrePrincipale extends JFrame implements ActionListener, MouseLi
 				saisieMiroir.setVisible(true);
 				Miroir nouveauMiroir = new Miroir(posX,posY,nouvelElement[2],nouvelElement[3]);
 				listeMiroirs.add(nouveauMiroir);
+			} else {
+				erreur.showMessageDialog(null, "Veuillez indiquer une position avant de selctionner l'objet","Erreur", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		
+		if (e.getSource()== boutonLameMince){
+			if (clic) {
+				saisieMiroir.setVisible(true);
+				LameMince nouveauLameMince = new LameMince(posX,posY,nouvelElement[2],nouvelElement[3]);
+				listeMiroirs.add(nouveauLameMince);
 			} else {
 				erreur.showMessageDialog(null, "Veuillez indiquer une position avant de selctionner l'objet","Erreur", JOptionPane.ERROR_MESSAGE);
 			}
@@ -227,6 +237,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener, MouseLi
 				erreur.showMessageDialog(null, "Veuillez indiquer une position avant de selctionner l'objet","Erreur", JOptionPane.ERROR_MESSAGE);
 			}
 		}
+		
 		
 		nouvelElement[3]=0; //afin d'eviter la creation de rayon non voulus, on reenitialise a zero
 		

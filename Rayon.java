@@ -34,13 +34,13 @@ public class Rayon
 	}
 	
 	
-	public Rayon chercheObstacle (ArrayList<Miroir> liste) {
+	public Rayon chercheObstacle (ArrayList<ObjetOptique> liste) {
 		
 		Rayon rayonRet = null;
 		
 		if(!liste.isEmpty()){
 			System.out.println("Recherche d'un obstacle");
-			for (Miroir mir : liste) {
+			for (ObjetOptique mir : liste) {
 			
 				if (mir!=createur) {
 					int[] tab = chercheIntersection(xDebut,yDebut,xFin,yFin,mir.xmin,mir.ymin, mir.xmax,mir.ymax);

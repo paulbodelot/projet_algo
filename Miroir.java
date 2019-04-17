@@ -52,12 +52,6 @@ public class Miroir extends ObjetOptique {
 		
 		return nouveauRayon;
 	}
-	
-	public void dessin(Graphics g){
-		g.setColor(Color.black);
-		g.drawLine(xmin,ymin,(xmax),(ymax));
-	
-		
-			}
+
 }
 

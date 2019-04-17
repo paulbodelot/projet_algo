@@ -35,11 +35,5 @@ public class SourceLum {
 		return ray;
 		
 	}
-	
-	public void dessin (Graphics g) {
-		g.setColor(couleur_rayon);
-		g.fillRect(x-taille/2, y-taille/2, taille, taille);
-	
-		
-	}
+
 }

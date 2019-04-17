@@ -71,14 +71,6 @@ public class Rayon
 	}
 	
 	
-	public void dessin(Graphics g) {
-		
-		g.setColor(couleur);
-		g.drawLine(xDebut, yDebut, xFin, yFin);
-	
-		
-	}
-	
 	
 		public int[] chercheIntersection(double xA,double yA, double xB, double yB,double xC,double yC, double xD, double yD) {
 		int[] sol ={-2048,-2048};

@@ -11,7 +11,7 @@ import java.awt.Color;
 public class FenetrePrincipale extends JFrame implements ActionListener, MouseListener {
 	
 	private JButton boutonMiroir;
-	private JButton boutonLentilleC;
+	private JButton boutonLameMince;
 	private JButton boutonMur;
 	private JButton boutonRayonRouge;
 	private JButton boutonRayonBleu;
@@ -149,14 +149,14 @@ public class FenetrePrincipale extends JFrame implements ActionListener, MouseLi
 		boutonMiroir.setFont(PoliceArial_16);
 		Panneau1.add(boutonMiroir);
 		
-		boutonLentilleC = new JButton("Lentille C");
-		boutonLentilleC.setFont(PoliceArial_14);
-		boutonLentilleC.setBounds(330,400,120,50);
-		boutonLentilleC.setBackground(Color.black);
-		boutonLentilleC.setForeground(Color.white);
-		Panneau1.add(boutonLentilleC);
+		boutonLameMince = new JButton("Lame mince");
+		boutonLameMince.setFont(PoliceArial_14);
+		boutonLameMince.setBounds(330,400,120,50);
+		boutonLameMince.setBackground(Color.black);
+		boutonLameMince.setForeground(Color.white);
+		Panneau1.add(boutonLameMince);
 		
-		boutonMur = new JButton("Lentille D");
+		boutonMur = new JButton("Mur");
 		boutonMur.setFont(PoliceArial_14);
 		boutonMur.setBounds(470,400,120,50);
 		boutonMur.setBackground(Color.black);
@@ -174,6 +174,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener, MouseLi
 		PanneauAffichage.addMouseListener(this);
 		suppression.addActionListener(this);
 		boutonMur.addActionListener(this);
+		boutonLameMince.addActionListener(this);
 		
 		
 	}

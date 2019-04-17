@@ -6,8 +6,8 @@ public class LameMince extends ObjetOptique {
 	int ymin;
 	int xmax;
 	int ymax;
-	double n = 1.5;
-	
+	double e=10;
+	double n=1.5;	
 	double angle;
 	int taille;
 	
@@ -24,26 +24,41 @@ public class LameMince extends ObjetOptique {
 	}
 	public Rayon creationRayon(Rayon rIncident, int xD, int yD){ //On crée un rayon réfléchi : son angle au miroir est l'opposé de celui du rayon incident
 		Rayon nouveauRayon;
-		double angleIncident = Math.PI/2;
+		double deltaX;
 		double deltaY;
-		int xFin;
-		int yFin;
+		int xFin=0;
+		int yFin=0;
+		double angleLame;
 		
 		
+		
+		double angleIncident = Math.PI/2;
 		if(yD>rIncident.yDebut){
 			angleIncident=-Math.PI/2;
 		}
-		
 		if(xD-rIncident.xDebut!=0){
-			angleIncident =Math.atan(((double)(yD)-(double)(rIncident.yDebut))/((double)(xD)-(double)(rIncident.xDebut)));
+			angleIncident =-Math.atan(((double)(yD)-(double)(rIncident.yDebut))/((double)(xD)-(double)(rIncident.xDebut)));
 		}
+		angleLame=angleIncident-this.angle-Math.PI/2;
+		deltaX = (1-Math.sqrt(1-Math.pow(Math.sin(angleLame),2)/((this.n*this.n)-Math.pow(Math.sin(angleLame),2))))*e;
+		deltaY = (1-Math.sqrt(1-Math.pow(Math.sin(angleLame),2)/((this.n*this.n)-Math.pow(Math.sin(angleLame),2))))*e*Math.sin(angleLame);
 		
-		deltaY = (1-Math.sqrt((1-Math.pow(Math.sin(angleIncident),2))/((this.n*this.n)-Math.pow(Math.sin(angleIncident),2))));
 		
-		xFin= (int)(yD+Math.sin(angleIncident)*900); //La longueur d'un rayon qui ne rencontre pas d'obstacle est de 900 pixels par défaut.
-		yFin=(int)(xD+Math.cos(angleIncident)*900);
 		
-		nouveauRayon = new Rayon (xD, (int)(yD-deltaY), xFin, yFin,rIncident.couleur,this);
+		if(xD>=rIncident.xDebut){
+			yFin= (int)(yD-Math.sin(angleIncident)*900);
+			xFin=(int)(xD+Math.cos(angleIncident)*900);
+		}
+		if(xD<rIncident.xDebut){
+			yFin= (int)(yD+Math.sin(angleIncident)*900);
+			xFin=(int)(xD-Math.cos(angleIncident)*900);
+		}
+			
+		
+		
+		
+		
+		nouveauRayon = new Rayon ((int)(xD+deltaX), (int)(yD+deltaY), xFin, yFin,rIncident.couleur,this);
 		
 		return nouveauRayon;
 	}
@@ -55,3 +70,4 @@ public class LameMince extends ObjetOptique {
 		
 			}
 }
+

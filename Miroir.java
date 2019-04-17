@@ -2,13 +2,7 @@ import java.awt.Graphics ;
 import java.awt.Color ;
 import javax.swing.JFrame ;
 public class Miroir extends ObjetOptique {
-	int xmin;
-	int ymin;
-	int xmax;
-	int ymax;
 	
-	double angle;
-	int taille;
 	
 	public Miroir(int posX, int posY, int angleD, int taille){
 		this.taille = taille;

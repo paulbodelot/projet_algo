@@ -1,4 +1,5 @@
 abstract class ObjetOptique{
+	
 	int xmin;
 	int ymin;
 	int xmax;
@@ -7,6 +8,6 @@ abstract class ObjetOptique{
 	double angle;
 	int taille;
 	
-	public abstract Rayon creationRayon(Rayon rIncident, int xD, int yD);
 	
+	public abstract Rayon creationRayon(Rayon rIncident, int xD, int yD);
 }

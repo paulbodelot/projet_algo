@@ -1,7 +1,13 @@
 abstract class ObjetOptique{
 	
-	Equation eq; 
+	int xmin;
+	int ymin;
+	int xmax;
+	int ymax;
 	
-	abstract Rayon creationRayon(int x, int y, Equation eq);
+	double angle;
+	int taille;
+	
+	
+	public abstract Rayon creationRayon(Rayon rIncident, int xD, int yD);
 }
-
